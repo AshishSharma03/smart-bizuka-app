@@ -58,8 +58,6 @@ function index() {
     
      {(Screen === 0)? <Home/> : ""}
      {(Screen === 1)? <PostsScreen/>: ""}
-     {/* {(Screen === 2)? <MLCameraScreen/>: ""} */}
-     {/* {(Screen === 3)? <ExpertScreen/>: ""} */}
     
       <Box sx={{background:"black", display:"flex",justifyContent:"center",alignItems:"center"}}>
         <Stack direction={'row'} sx={{zIndex:99,position:"fixed",bottom:"10px",borderRadius:"50px",background:"#fff",boxShadow:"0px 0px 100px 1px rgba(0,0,0,0.2)"}}>
