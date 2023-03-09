@@ -9,7 +9,6 @@ function MLCameraScreen() {
                 videoRef.current.srcObject = Stream
                 videoRef.current.play();
                 setLoaded(true)
-
         })
     }, []);
 

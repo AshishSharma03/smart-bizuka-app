@@ -59,7 +59,7 @@ function index() {
     
      {(Screen === 0)? <Home/> : ""}
      {(Screen === 1)? <PostsScreen/>: ""}
-     {(Screen === 2)? <MLCameraScreen/>: ""}
+     {/* {(Screen === 2)? <MLCameraScreen/>: ""} */}
      {(Screen === 3)? <ExpertScreen/>: ""}
     
       <Box sx={{background:"black", display:"flex",justifyContent:"center",alignItems:"center"}}>
