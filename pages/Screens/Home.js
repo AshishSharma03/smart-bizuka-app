@@ -37,12 +37,12 @@ const WeatherComponent = ({type,data,unit}) =>{
 </Box>)
 }
 
-const HeaderBoxBody =({children})=>{
+const HeaderBoxBody =({title,children})=>{
 
     return (
         <Stack gap={1}>
         <Box sx={{padding:"20px",borderRadius:"20px ",boxShadow:"0px 0px 100px 5px rgba(0,0,0,0.2 )"}}>
-          <Stack>Weather</Stack>
+          <Stack>{title}</Stack>
         </Box>
         <Box sx={{padding:"20px",borderRadius:"20px",boxShadow:"0px 0px 100px 5px rgba(0,0,0,0.2 )"}}>
          {children}
@@ -57,12 +57,12 @@ function Home() {
   return (
     
     <Stack gap={4}>
-        <HeaderBoxBody>
+        <HeaderBoxBody title={'Weather'}>
         <Stack direction={'row'} gap={2} justifyContent="center">
                 {WeatherData.map((a)=> <WeatherComponent type={a.Type} unit={a.unit} data={a.data} />)}
           </Stack>
         </HeaderBoxBody>
-        <HeaderBoxBody>
+        <HeaderBoxBody title={'Field Detail'}>
             <Stack direction={"row"} justifyContent="center">
                     <Box width={"50%"}>
                         <Stack>

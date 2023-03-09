@@ -6,23 +6,25 @@ import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
 import Home from './Screens/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import PostsScreen from './Screens/Posts';
+import Link from 'next/link';
 
 const BtnIcon = [
   {
-    id : "113",
+    id : "Home",
     icon :<HomeRoundedIcon/>
     
   },
   {
-    id : "123",
-    icon :<CameraAltRoundedIcon/>
-  },
-  {
-    id :"1213",
+    id : "Post",
     icon : <ImageRoundedIcon/>,
   },
   {
-    id:"1213",
+    id :"Image",
+    icon :<CameraAltRoundedIcon/>
+  },
+  {
+    id:"Expert",
     icon :<CallRoundedIcon/>
   }]
     
@@ -32,7 +34,7 @@ const BtnIcon = [
 
 
 function index() {
-  const [Screen, setScreen] = useState();
+  const [Screen, setScreen] = useState(1);
 
   return (
     <Box sx={{minHeight:"100vh"}}>
@@ -52,10 +54,13 @@ function index() {
             </IconButton>
         </Toolbar>
     </AppBar>
-      <Home/>
+    
+     {(Screen === 0)? <Home/> : ""}
+     {(Screen === 1)? <PostsScreen/> : ""}
+     {/* {(Screen === BtnIcon[2].id)? :""} */}
       <Box sx={{background:"black", display:"flex",justifyContent:"center",alignItems:"center"}}>
         <Stack direction={'row'} sx={{position:"absolute",bottom:"10px",borderRadius:"50px",background:"#fff",boxShadow:"0px 0px 10px 10px rgba(0,0,0,0.2)"}}>
-          {BtnIcon.map((a,i)=> <IconButton size='large' key={i} sx={{padding:"20px"}}>
+          {BtnIcon.map((a,i)=> <IconButton size='large' key={i} sx={{padding:"20px"}} onClick={()=>{setScreen(i)}}>
             {a.icon}
           </IconButton>)}
         </Stack>
