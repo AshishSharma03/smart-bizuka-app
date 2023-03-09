@@ -6,8 +6,10 @@ import ImageRoundedIcon from '@mui/icons-material/ImageRounded';
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
 import Home from './Screens/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import PostsScreen from './Screens/Posts';
-import Link from 'next/link';
+import PostsScreen from './Screens/PostScreen';
+import MLCameraScreen from './Screens/MLCameraScreen';
+import ExpertScreen from './Screens/ExpertScreen';
+
 
 const BtnIcon = [
   {
@@ -34,13 +36,13 @@ const BtnIcon = [
 
 
 function index() {
-  const [Screen, setScreen] = useState(1);
+  const [Screen, setScreen] = useState(0);
 
   return (
     <Box sx={{minHeight:"100vh"}}>
       <Container>
 
-    <AppBar position='static'  sx={{background:"#ffffff",boxShadow:"none",padding:"10px 0px"}}>
+    <AppBar position='sticky'  sx={{background:"none",boxShadow:"none",padding:"10px 0px"}}>
         <Toolbar>
               <Typography sx={{color:"#000000",fontSize:"20px",fontWeight:800}}>Good Morning</Typography>
               <span style={{flex:1}} />
@@ -56,11 +58,13 @@ function index() {
     </AppBar>
     
      {(Screen === 0)? <Home/> : ""}
-     {(Screen === 1)? <PostsScreen/> : ""}
-     {/* {(Screen === BtnIcon[2].id)? :""} */}
+     {(Screen === 1)? <PostsScreen/>: ""}
+     {(Screen === 2)? <MLCameraScreen/>: ""}
+     {(Screen === 3)? <ExpertScreen/>: ""}
+    
       <Box sx={{background:"black", display:"flex",justifyContent:"center",alignItems:"center"}}>
-        <Stack direction={'row'} sx={{position:"absolute",bottom:"10px",borderRadius:"50px",background:"#fff",boxShadow:"0px 0px 10px 10px rgba(0,0,0,0.2)"}}>
-          {BtnIcon.map((a,i)=> <IconButton size='large' key={i} sx={{padding:"20px"}} onClick={()=>{setScreen(i)}}>
+        <Stack direction={'row'} sx={{zIndex:99,position:"fixed",bottom:"10px",borderRadius:"50px",background:"#fff",boxShadow:"0px 0px 100px 1px rgba(0,0,0,0.2)"}}>
+          {BtnIcon.map((a,i)=> <IconButton size='large' key={i} sx={{padding:"20px",color:(i === Screen)?"green":""}} onClick={()=>{setScreen(i)}}>
             {a.icon}
           </IconButton>)}
         </Stack>
