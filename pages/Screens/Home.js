@@ -56,17 +56,21 @@ const HeaderBoxBody =({title,children,noHeader})=>{
 
 
 function Home() {
+
+
   return (
     
     <Stack gap={3}>
         <HeaderBoxBody title={'Weather'}>
         <Stack direction={'row'} gap={2} justifyContent="center">
-                {WeatherData.map((a)=> <WeatherComponent type={a.Type} unit={a.unit} data={a.data} />)}
+                {WeatherData.map((a,i)=> <WeatherComponent type={a.Type} key={i} unit={a.unit} data={a.data} />)}
           </Stack>
         </HeaderBoxBody>
+        
         <HeaderBoxBody title={'Field Detail'}>
             <Stack direction={"row"} justifyContent="center">
                     <Box width={"50%"}  display="flex" justifyContent={"center"}  >
+                        {/* // RealTime Data */}
                         <Stack >
                             <Typography sx={{fontSize:"12px",fontWeight:800}}>Soil</Typography>
                             <Typography sx={{fontSize:"12px",fontWeight:800}}>Tempreture</Typography>

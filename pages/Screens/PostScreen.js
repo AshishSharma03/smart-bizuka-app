@@ -1,6 +1,7 @@
-import { Box, Select ,Option, MenuItem,Button, Grid, Typography, Chip} from '@mui/material'
+import { Box, Select ,Option, MenuItem,Button, Grid, Typography, Chip, FormControl, InputLabel} from '@mui/material'
 import { Stack } from '@mui/material'
-import React from 'react'
+import Image from 'next/image'
+import React ,{useState,useEffect}from 'react'
 
 
 const SelectCrop = ['Apple','Rice','Mango']
@@ -12,7 +13,7 @@ const PostData = [
   image: "https://namc.pmd.gov.pk/images/crop-reports.jpg",
   createdAt: "82434344343",
   updatedAt: "skdksdjksdks",
-  _id: "8364834864"
+  _id: "8ss"
 },
 {
   croptype: "Apple",
@@ -21,7 +22,7 @@ const PostData = [
   image: "https://namc.pmd.gov.pk/images/crop-reports.jpg",
   createdAt: "82434344343",
   updatedAt: "skdksdjksdks",
-  _id: "8364834864"
+  _id: "sa"
 }
 ]
 
@@ -65,6 +66,29 @@ const HeaderBoxBody =({title,children})=>{
 
 }
 function PostsScreen() {
+  const [Plants, setPlants] = useState('Apple');
+  const [image, setImage] = React.useState("");
+  const imageRef = React.useRef(null);
+
+  function useDisplayImage() {
+    const [result, setResult] = React.useState("");
+
+    function uploader(e) {
+      const imageFile = e.target.files[0];
+
+      const reader = new FileReader();
+      reader.addEventListener("load", (e) => {
+        setResult(e.target.result);
+      });
+
+      reader.readAsDataURL(imageFile);
+    }
+
+    return { result, uploader };
+  }
+
+    const { result, uploader } = useDisplayImage();
+
   return (
    <Box>
     <Stack direction={"column"} gap={2}>
@@ -73,17 +97,34 @@ function PostsScreen() {
       <Stack direction={"row"} gap={2}>
       <Button variant="contained" component="label"  sx={{width:"30%",background:"#fff",boxShadow:"0px 0px 100px 10px rgba(0,0,0,0.2)",color:"#000000",borderRadius:"50px"}}>
         + Upload
-        <input hidden accept="image/*" multiple type="file" />
+        <input hidden accept="image/*" type="file" 
+        onChange={(e) => {
+          setImage(e.target.files[0]);
+          uploader(e);
+        }}
+       />
       </Button>
-      <Select label="select Crop"  sx={{width:"70%",color:"black"}}>
-        {SelectCrop.map((a)=> <MenuItem>{a}</MenuItem>)}
+      <FormControl sx={{width:"70%",color:"black"}}>
+      <InputLabel labelId="demo-simple-select-helper-label">Plants</InputLabel>
+      <Select
+      labelId="demo-simple-select-helper-label"
+      label="Age" value={Plants} onChange={(e)=>{setPlants(e.target.value)}} >
+        {SelectCrop.map((a,i)=> <MenuItem value={a} key={i}>{a}</MenuItem>)}
       </Select>
+      </FormControl>
       </Stack>
     </Box>
 
     <Box sx={{height:"200px",borderRadius:"10px",display:"flex",justifyContent:"center",alignItems:"center"}}>
+      
+        
+        {result ? <img ref={imageRef} src={result} alt="" width={"fit-content "} height="200px" />:
+
        <Typography sx={{fontWeight:800}}>NO IMAGE</Typography>  
+        }
+    
     </Box>
+    {/* // use OnClick POst */}
     <Button sx={{background:"green",color:"white"}}>POST</Button>
     <HeaderBoxBody title={"Past Sent Images"}>
       <Stack gap={1}>
