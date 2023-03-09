@@ -7,8 +7,7 @@ import CallRoundedIcon from '@mui/icons-material/CallRounded';
 import Home from './Screens/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PostsScreen from './Screens/PostScreen';
-import MLCameraScreen from './Screens/MLCameraScreen';
-import ExpertScreen from './Screens/ExpertScreen';
+
 
 
 const BtnIcon = [
@@ -60,7 +59,7 @@ function index() {
      {(Screen === 0)? <Home/> : ""}
      {(Screen === 1)? <PostsScreen/>: ""}
      {/* {(Screen === 2)? <MLCameraScreen/>: ""} */}
-     {(Screen === 3)? <ExpertScreen/>: ""}
+     {/* {(Screen === 3)? <ExpertScreen/>: ""} */}
     
       <Box sx={{background:"black", display:"flex",justifyContent:"center",alignItems:"center"}}>
         <Stack direction={'row'} sx={{zIndex:99,position:"fixed",bottom:"10px",borderRadius:"50px",background:"#fff",boxShadow:"0px 0px 100px 1px rgba(0,0,0,0.2)"}}>

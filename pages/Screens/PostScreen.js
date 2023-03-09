@@ -45,7 +45,7 @@ const Posts = ({croptype,diseasefound,createdAt,images,updatedAt,id}) =>{
             <Postdata label={"Crop Type"} data={croptype} />
           </Box>
           <span style={{flexGrow:1}}/>
-          <Image src={images}  width={100} style={{borderRadius:'10px'}} alt="qwpq" height={100}/>
+          {/* <Image src={images}  width={100} style={{borderRadius:'10px'}} alt="qwpq" height={100}/> */}
 
   </Box>)
 }
