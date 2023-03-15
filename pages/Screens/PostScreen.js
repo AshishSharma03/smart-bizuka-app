@@ -221,7 +221,7 @@ function PostsScreen({PostData}) {
         <Button   sx={{padding:"10px",color:"green",background:"#DDEBDB",border:"2px solid green"}} onClick = { ()=>{ PostImage(result)}}>POST</Button>
         <HeaderBoxBody title={"Past Sent Images"}>
           <Stack gap={1}>
-            {PostData.map((a) => {
+            {PostData?.map((a) => {
               return (
                 <Posts
                   croptype={a.planttype}
