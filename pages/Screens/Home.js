@@ -1,7 +1,10 @@
 import React from 'react'
-import { AppBar, Avatar, Box, Button, ButtonGroup, Container, IconButton, Stack, Toolbar, Typography ,Badge, Grid, Divider} from '@mui/material'
-
+import { AppBar, Avatar, Box, Button, ButtonGroup, Container, IconButton, Stack, Toolbar, Typography ,Badge, Grid, Divider, Icon,  Slider} from '@mui/material'
+import Battery60Icon from '@mui/icons-material/Battery60';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import WellPlant from '../../public/assets/BizukaBody/WellPlant.png'
 const WeatherData = [
     {
         id:"a",
@@ -37,13 +40,16 @@ const WeatherComponent = ({type,data,unit}) =>{
 </Box>)
 }
 
-const HeaderBoxBody =({title,children,noHeader})=>{
+const HeaderBoxBody =({title,children,noHeader,gap=1,icon,titleColor})=>{
 
     return (
-        <Stack gap={1} zIndex={99}>
+        <Stack gap={gap} zIndex={99}>
             {(!noHeader)?
-        <Box sx={{padding:"10px 20px",borderRadius:"10px " ,boxShadow:"0px 0px 100px 5px rgba(0,0,0,0.2 )"}}>
-          <Stack><Typography sx={{fontSize:"18px",fontWeight:800}}>{title}</Typography></Stack>
+        <Box sx={{display:"flex",flexDirection:"row",padding:"10px 20px",borderRadius:"10px " ,boxShadow:"0px 0px 100px 5px rgba(0,0,0,0.2 )"}}>
+          <Typography sx={{fontSize:"18px",fontWeight:800,color:titleColor}}>{title}</Typography>
+            <span style={{flexGrow:1}}/>
+            {icon}
+            
         </Box>
         :""}
         <Box sx={{padding:"20px",borderRadius:"10px",boxShadow:"0px 0px 100px 5px rgba(0,0,0,0.2 )"}}>
@@ -54,51 +60,83 @@ const HeaderBoxBody =({title,children,noHeader})=>{
 
 }
 
+const marks = [
+    {
+      value: 0,
+      label: 'Bad',
+    },
+    {
+      value: 30,
+      label: 'Well',
+    },
+    {
+      value: 67,
+      label: 'Optimal',
+    },
+    {
+      value: 100,
+      label: 'excess',
+    },
+  ];
+  
+  function valuetext(value) {
+    return `${value}`;
+  }
 
 function Home() {
-
+const router = useRouter()
 
   return (
     
-    <Stack gap={3}>
-        <HeaderBoxBody title={'Weather'}>
-        <Stack direction={'row'} gap={2} justifyContent="center">
-                {WeatherData.map((a,i)=> <WeatherComponent type={a.Type} key={i} unit={a.unit} data={a.data} />)}
-          </Stack>
+    <Stack gap={2} paddingBottom="100px">
+         <HeaderBoxBody noHeader>
+        <Typography style={{fontSize:"15px",fontWeight:800}}>PLNAT CONDITION</Typography>
+        <Stack sx={{padding:"10px"}} gap={1} direction="row">
+                    <Stack direction={"row"} alignItems="center" gap={0.5}> 
+                    <CheckCircleIcon sx={{fontSize:"30px",color:"green"}}/> <Typography sx={{fontSize:"20px",fontWeight:800,color:"green"}}>Well</Typography>  </Stack>
+                    <span style={{flexGrow:1}}/>
+                    <Image src={WellPlant} style={{width:"100px",height:"100px"}}  />
+            </Stack>
         </HeaderBoxBody>
-        
+       
         <HeaderBoxBody title={'Field Detail'}>
-            <Stack direction={"row"} justifyContent="center">
-                    <Box width={"50%"}  display="flex" justifyContent={"center"}  >
+            <Stack direction={"column"} justifyContent="center" alignItems={"center"}>
+                <Typography sx={{fontSize:"20px",fontWeight:800,color:"#EF9725"}}>Soil Moisture Condition</Typography>
+
+                    <Box width={"80%"}  display="flex" justifyContent={"center"}  >
                         {/* // RealTime Data */}
-                        <Stack >
-                            <Typography sx={{fontSize:"12px",fontWeight:800}}>Soil</Typography>
-                            <Typography sx={{fontSize:"12px",fontWeight:800}}>Tempreture</Typography>
-                            <Stack direction={'row'}>
-                            <Typography sx={{fontSize:"20px"}}>22</Typography>
-                            <Typography >Celicus</Typography>
-                            </Stack>
-                        </Stack>
+                    <Slider
+                    aria-label="Always visible"
+                    defaultValue={40}
+                    disabled
+                    style={{color:"#EF9725"}}
+                    getAriaValueText={valuetext}
+                    step={10}
+                    marks={marks}
+                    // valueLabelDisplay="on"
+                   
+                 />
                     </Box>
-                    <span style={{padding:"1px",background:'gray'}} />
-                    <Box width={"50%"} display="flex" justifyContent={"center"} >
-                        <Stack>
-                            <Typography sx={{fontSize:"12px",fontWeight:800}}>Soil</Typography>
-                            <Typography sx={{fontSize:"12px",fontWeight:800}}>Tempreture</Typography>
-                            <Stack direction={'row'}>
-                            <Typography sx={{fontSize:"20px"}}>22</Typography>
-                            <Typography>Celicus</Typography>
-                            </Stack>
-                        </Stack>
-                    </Box>
+                  
             </Stack>
            
         </HeaderBoxBody>
-        <HeaderBoxBody noHeader>
-        <Stack sx={{padding:"10px"}} gap={1}>
-                    <Typography style={{fontSize:"20px",fontWeight:800}}>IS CROP HEALTHY?</Typography>
-                    <Stack direction={"row"} alignItems="center" gap={1}> <CheckCircleIcon sx={{fontSize:"30px",color:"green"}}/> <Typography sx={{fontSize:"20px",fontWeight:800,color:"green"}}>YES</Typography>  </Stack>
-            </Stack>
+       
+        <HeaderBoxBody title={'MY BIZUKA'} titleColor={"green"} gap={1} >
+                <Stack direction={"row"}>
+
+                <Stack>
+                
+                    <Typography sx={{fontWeight:700}}><span style={{color:"#B0B0AF"}}>Device_ID :</span> #1198308032  </Typography>
+                    <Typography sx={{fontWeight:700}}><span style={{color:"#B0B0AF"}}>Device Condition :</span> <span style={{color:"green"}}>GOOD</span>  </Typography>
+                </Stack>
+                <span style={{flexGrow:1}}/>
+                <Battery60Icon style={{fontSize:"40px",color:"green"}}/>
+                </Stack>
+                <Stack direction={"row"} gap={2} paddingTop="10px">
+        <Button variant="outlined" fullWidth sx={{fontSize:"12px"}} color="info" onClick={()=>{ router.push('/ShowMyBizuka')}}>Show my Device</Button>
+        <Button variant="outlined" fullWidth sx={{fontSize:"12px"}} color="success" onClick={()=>{ router.push('/')}}>Change Device</Button>
+                </Stack>
         </HeaderBoxBody>
     </Stack>
    

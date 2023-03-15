@@ -9,11 +9,13 @@ import {
   Chip,
   FormControl,
   InputLabel,
+  IconButton,
 } from "@mui/material";
 import { Stack } from "@mui/material";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import CloseIcon from '@mui/icons-material/Close';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 const SelectCrop = ["Apple", "Rice", "Mango"];
 
@@ -35,6 +37,7 @@ const Posts = ({
   updatedAt,
   id,
 }) => {
+
   return (
     <Box
       sx={{
@@ -45,17 +48,21 @@ const Posts = ({
         boxShadow: "0px 0px 100px 5px rgba(0,0,0,0.2)",
       }}
     >
+      
       <Box>
-        <Postdata label={"Date"} data={createdAt} />
+        <Postdata label={"Date"} data={""} />
         <Postdata
           label={"Disease Detected"}
           data={diseasefound ? "true" : "false"}
-          color="red"
+          color={diseasefound ? "red" : "green"}
         />
         <Postdata label={"Crop Type"} data={croptype} />
       </Box>
       <span style={{ flexGrow: 1 }} />
-      {/* <Image src={images}  width={100} style={{borderRadius:'10px'}} alt="qwpq" height={100}/> */}
+      {images?
+      <Image src={images}  width={100} style={{borderRadius:'10px'}} alt="qwpq" height={100}/>
+      :""
+      }
     </Box>
   );
 };
@@ -70,69 +77,18 @@ const HeaderBoxBody = ({ title, children }) => {
     </Stack>
   );
 };
-function PostsScreen() {
+
+
+function PostsScreen({PostData}) {
   const [Plants, setPlants] = useState("Apple");
-  const [image, setImage] = React.useState("");
+  const [image, setImage] = useState("");
   const imageRef = React.useRef(null);
+  
 
-  const [PostData, setPostData] = useState([
-    {
-      croptype: "Apple",
-      diseasefound: true,
-      diseasetype: "Black Rot Apple",
-      image: "https://namc.pmd.gov.pk/images/crop-reports.jpg",
-      createdAt: "82434344343",
-      updatedAt: "skdksdjksdks",
-      _id: "8ss",
-    },
-    {
-      croptype: "Apple",
-      diseasefound: true,
-      diseasetype: "Black Rot Apple",
-      image: "https://namc.pmd.gov.pk/images/crop-reports.jpg",
-      createdAt: "82434344343",
-      updatedAt: "skdksdjksdks",
-      _id: "sa",
-    },
-  ]);
-
-  async function addPost() {
-
-    if (!Plants || !image) {
-      return;
-    }
-
-    const uri = "https://eyic-backend.vercel.app/v1/posts/addpost";
-
-      const response = await axios.post(uri, {
-        diseasefound: true,
-        diseasetype: "DiseaseAb",
-        planttype: Plants,
-        image: result,
-      });
-      console.log(response)
-      if (response) {
-        alert('Posted Crop Successfully')
-        fetchall()
-      }  
-  }
-
-  async function fetchall() {
-    const uri = "https://eyic-backend.vercel.app/v1/posts/all";
-
-    try {
-      const response = await axios.get(url);
-      if (response) {
-        setPostData(response.data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
+  
   function useDisplayImage() {
-    const [result, setResult] = React.useState("");
-
+    const [result, setResult] = useState();
+    
     function uploader(e) {
       const imageFile = e.target.files[0];
 
@@ -143,41 +99,40 @@ function PostsScreen() {
 
       reader.readAsDataURL(imageFile);
     }
-
-    return { result, uploader };
+    return { result, uploader, setResult };
   }
+  const { result, uploader,setResult } = useDisplayImage();
 
-  const { result, uploader } = useDisplayImage();
-  console.log(result);
+  const PostImage = async(image_)=>{
+        // console.log(image_)
+        console.log(image_)
+        if(image_){
+          try{
+            const res = await fetch( '/api/CropPost',{
+            method:'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({
+              image : image_,
+              diseasefound : true,
+              planttype : Plants, 
+              diseaseType:"Apple Scrub"
+            })
+          })
+        }catch(err){
+          console.log(err)
+        }
+      }
+  }
 
   return (
     <Box>
       <Stack direction={"column"} gap={2}>
         <Box>
           <Stack direction={"row"} gap={2}>
-            <Button
-              variant="contained"
-              component="label"
-              sx={{
-                width: "30%",
-                background: "#fff",
-                boxShadow: "0px 0px 100px 10px rgba(0,0,0,0.2)",
-                color: "#000000",
-                borderRadius: "50px",
-              }}
-            >
-              + Upload
-              <input
-                hidden
-                accept="image/*"
-                type="file"
-                onChange={(e) => {
-                  setImage(e.target.files[0]);
-                  uploader(e);
-                }}
-              />
-            </Button>
-            <FormControl sx={{ width: "70%", color: "black" }}>
+            <FormControl sx={{ width: "100%", color: "black" }}>
               <InputLabel labelId="demo-simple-select-helper-label">
                 Plants
               </InputLabel>
@@ -201,6 +156,7 @@ function PostsScreen() {
 
         <Box
           sx={{
+            position:"relative",
             height: "200px",
             borderRadius: "10px",
             display: "flex",
@@ -215,13 +171,54 @@ function PostsScreen() {
               alt=""
               width={"fit-content "}
               height="200px"
-            />
+              />
+        
           ) : (
-            <Typography sx={{ fontWeight: 800 }}>NO IMAGE</Typography>
+            
+            <Button
+            variant="contained"
+            component="label"
+            sx={{
+              height:"200px",
+              width:"100%",
+              background: "#fff",
+              boxShadow:"none",
+              color: "#000000",
+              '&:hover':{
+                background:"none",
+                boxShadow:"none",
+              },
+              
+            }}
+          >
+            <Stack direction="row" gap={1}>
+            <AddAPhotoIcon sx={{color:"#ccc"}}/>
+           <Typography sx={{
+            fontWeight:"700",
+            fontSize:"16px",
+              color:"#ccc"}}>Tap To Add Image</Typography>
+            </Stack>
+            <input
+              hidden
+              accept="image/*"
+              type="file"
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+                uploader(e);
+              }}
+            />
+          </Button>
           )}
+          {
+            (result)?
+            <IconButton color="error" sx={{position:"absolute",top:"0px",right:"0px",border:"1px solid #F7788A"}} onClick={()=>{setResult(undefined )}}>
+                <CloseIcon htmlColor="#F7788A"/>
+              </IconButton>
+              :""
+            }
         </Box>
         {/* // use OnClick POst */}
-        <Button sx={{ background: "green", color: "white" }} onClick = {addPost}>POST</Button>
+        <Button   sx={{padding:"10px",color:"green",background:"#DDEBDB",border:"2px solid green"}} onClick = { ()=>{ PostImage(result)}}>POST</Button>
         <HeaderBoxBody title={"Past Sent Images"}>
           <Stack gap={1}>
             {PostData.map((a) => {

@@ -8,6 +8,8 @@ import Home from './Screens/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PostsScreen from './Screens/PostScreen';
 import MLCameraScreen from './Screens/MLCameraScreen';
+import dbConnect from "../lib/dbConnect";
+import cropModel from "../lib/model/cropModel";
 
 
 
@@ -35,9 +37,9 @@ const BtnIcon = [
     
 
 
-function index() {
+function index( {cropPosts}) {
   const [Screen, setScreen] = useState(0);
-
+// console.log(cropPosts)
   return (
     <Box sx={{minHeight:"100vh"}}>
       <Container>
@@ -58,8 +60,9 @@ function index() {
     </AppBar>
     
      {(Screen === 0)? <Home/> : ""}
-     {(Screen === 1)? <PostsScreen/>: ""}
+     {(Screen === 1)? <PostsScreen PostData={cropPosts}/>: ""}
      {(Screen === 2)? <MLCameraScreen/>: ""}
+
       
       <Box sx={{background:"black", display:"flex",justifyContent:"center",alignItems:"center"}}>
         <Stack direction={'row'} sx={{zIndex:99,position:"fixed",bottom:"10px",borderRadius:"50px",background:"#fff",boxShadow:"0px 0px 100px 1px rgba(0,0,0,0.2)"}}>
@@ -72,5 +75,23 @@ function index() {
     </Box>
   )
 }
+
+
+function convertDocToObj(doc) {
+  doc._id = doc._id.toString();
+  doc.createdAt = doc.createdAt.toString();
+  doc.updatedAt = doc.updatedAt.toString();
+  doc.advice = doc.advice?.toString() ?? "";
+  return doc;
+}
+
+
+
+export async function getServerSideProps(){
+  await dbConnect()
+  const res = await cropModel.find({}).lean()
+  return {props : { cropPosts : res.map(convertDocToObj)}}
+}
+
 
 export default index
