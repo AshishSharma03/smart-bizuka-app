@@ -144,7 +144,7 @@ function PostsScreen({PostData}) {
                   setPlants(e.target.value);
                 }}
               >
-                {SelectCrop.map((a, i) => (
+                {SelectCrop?.map((a, i) => (
                   <MenuItem value={a} key={i}>
                     {a}
                   </MenuItem>
