@@ -23,7 +23,7 @@ const Meta = () => (
 			content='#ffffff'
 			media='(prefers-color-scheme: dark)'
 		/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
 		<link rel='apple-touch-icon' href='/images/icon-maskable-512.png' />
 		<link rel='icon' type='image/png' href='/images/favicon.png' />
 		<link rel='manifest' href='/manifest.json' />
