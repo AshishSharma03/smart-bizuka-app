@@ -95,7 +95,7 @@ const router = useRouter()
                     <Stack direction={"row"} alignItems="center" gap={0.5}> 
                     <CheckCircleIcon sx={{fontSize:"30px",color:"green"}}/> <Typography sx={{fontSize:"20px",fontWeight:800,color:"green"}}>Well</Typography>  </Stack>
                     <span style={{flexGrow:1}}/>
-                    <Image src={WellPlant} style={{width:"100px",height:"100px"}}  />
+                    <Image src={WellPlant} alt="" style={{width:"100px",height:"100px"}}  />
             </Stack>
         </HeaderBoxBody>
        
@@ -124,9 +124,7 @@ const router = useRouter()
        
         <HeaderBoxBody title={'MY BIZUKA'} titleColor={"green"} gap={1} >
                 <Stack direction={"row"}>
-
                 <Stack>
-                
                     <Typography sx={{fontWeight:700}}><span style={{color:"#B0B0AF"}}>Device_ID :</span> #1198308032  </Typography>
                     <Typography sx={{fontWeight:700}}><span style={{color:"#B0B0AF"}}>Device Condition :</span> <span style={{color:"green"}}>GOOD</span>  </Typography>
                 </Stack>

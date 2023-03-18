@@ -153,11 +153,11 @@ function PostsScreen({PostData}) {
         <Box>
           <Stack direction={"row"} gap={2}>
             <FormControl sx={{ width: "100%", color: "black" }}>
-              <InputLabel labelId="demo-simple-select-helper-label">
+              <InputLabel  labelid="demo-simple-select-helper-label">
                 Plants
               </InputLabel>
               <Select
-                labelId="demo-simple-select-helper-label"
+                labelid="demo-simple-select-helper-label"
                 label="Age"
                 value={Plants}
                 onChange={(e) => {

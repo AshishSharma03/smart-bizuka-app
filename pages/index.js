@@ -8,8 +8,7 @@ import Home from './Screens/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PostsScreen from './Screens/PostScreen';
 import MLCameraScreen from './Screens/MLCameraScreen';
-import dbConnect from "../lib/dbConnect";
-import cropModel from "../lib/model/cropModel";
+
 
 
 
@@ -37,7 +36,7 @@ const BtnIcon = [
     
 
 
-function index( {cropPosts}) {
+function index( {cropPosts = []}) {
   const [Screen, setScreen] = useState(0);
 // console.log(cropPosts)
   return (
@@ -87,11 +86,12 @@ function convertDocToObj(doc) {
 
 
 
-export async function getServerSideProps(){
-  await dbConnect()
-  const res = await cropModel.find({}).lean()
-  return {props : { cropPosts : res.map(convertDocToObj)}}
-}
+// export async function getStaticProps(){
+  // await dbConnect()
+  // const res = await cropModel.find({}).lean()
+  // return {props : { cropPosts : res.map(convertDocToObj) }}
+  
+// }
 
 
 export default index
