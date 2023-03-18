@@ -9,6 +9,7 @@ export default async function handler(req, res) {
 
       try{
         const CropPost = await cropModel.find({})
+        
         res.status(200).json({success : true , data : CropPost})
       }catch(error){
         res.status(400).json({success:false})

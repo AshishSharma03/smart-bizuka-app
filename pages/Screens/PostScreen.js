@@ -10,6 +10,7 @@ import {
   FormControl,
   InputLabel,
   IconButton,
+  CircularProgress,
 } from "@mui/material";
 import { Stack } from "@mui/material";
 import Image from "next/image";
@@ -82,6 +83,7 @@ const HeaderBoxBody = ({ title, children }) => {
 function PostsScreen({PostData}) {
   const [Plants, setPlants] = useState("Apple");
   const [image, setImage] = useState("");
+  const [imagePost, setImagePost] = useState(false);
   const imageRef = React.useRef(null);
   
 
@@ -105,6 +107,7 @@ function PostsScreen({PostData}) {
 
   const PostImage = async(image_)=>{
         // console.log(image_)
+        setImagePost(true)
         console.log(image_)
         if(image_){
           try{
@@ -121,10 +124,27 @@ function PostsScreen({PostData}) {
               diseaseType:"Apple Scrub"
             })
           })
+
+          if(res.status === 200){
+            setImagePost(false)
+          } 
+          console.log(res.status === 200)
+
         }catch(err){
           console.log(err)
+          setImagePost(false)
         }
+      }else{
+        setImagePost(false)
       }
+  }
+
+
+
+
+  const oncloseImage =()=>{
+    setResult(undefined ) 
+    setImagePost(false)
   }
 
   return (
@@ -211,17 +231,26 @@ function PostsScreen({PostData}) {
           )}
           {
             (result)?
-            <IconButton color="error" sx={{position:"absolute",top:"0px",right:"0px",border:"1px solid #F7788A"}} onClick={()=>{setResult(undefined )}}>
+            <IconButton color="error" sx={{position:"absolute",top:"0px",right:"0px",border:"1px solid #F7788A"}} onClick={oncloseImage}>
                 <CloseIcon htmlColor="#F7788A"/>
               </IconButton>
               :""
             }
         </Box>
         {/* // use OnClick POst */}
-        <Button   sx={{padding:"10px",color:"green",background:"#DDEBDB",border:"2px solid green"}} onClick = { ()=>{ PostImage(result)}}>POST</Button>
+        <Button   sx={{padding:"10px",color:"green",background:(imagePost)?"#ccc":"#DDEBDB",border:(imagePost)?"gray":"2px solid green"}} disabled={imagePost} onClick = { ()=>{ PostImage(result)}}>
+         {
+          (imagePost)?
+          <CircularProgress
+          size={"20px"}
+          />
+         :
+          "POST"
+         }
+          </Button>
         <HeaderBoxBody title={"Past Sent Images"}>
           <Stack gap={1}>
-            {PostData?.map((a) => {
+            {PostData?.reverse().map((a) => {
               return (
                 <Posts
                   croptype={a.planttype}

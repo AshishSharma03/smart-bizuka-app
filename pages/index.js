@@ -43,7 +43,7 @@ function index( {cropPosts}) {
   return (
     <Box sx={{minHeight:"100vh"}}>
       <Container>
-
+    
     <AppBar position='sticky'  sx={{background:"none",boxShadow:"none",padding:"10px 0px"}}>
         <Toolbar>
               <Typography sx={{color:"#000000",fontSize:"20px",fontWeight:800}}>Good Morning</Typography>
