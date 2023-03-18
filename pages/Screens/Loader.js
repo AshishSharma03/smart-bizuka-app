@@ -1,10 +1,10 @@
 import { Box, CircularProgress } from '@mui/material'
 import React from 'react'
 
-function Loader() {
+function Loader({height = "100vh"}) {
   return (
     <Box
-    sx={{minHeight:"100vh",display:"flex",justifyContent:"center",alignItems:"center"}}
+    sx={{minHeight:height,display:"flex",justifyContent:"center",alignItems:"center"}}
     >
         <CircularProgress
         sx={{color:"#4AAC7B",position:'absolute'}}

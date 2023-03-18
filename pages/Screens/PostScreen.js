@@ -21,63 +21,6 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 const SelectCrop = ["Apple", "Rice", "Mango"];
 
 
-const Postdata = ({ label, data, color }) => {
-  return (
-    <Stack gap={1} direction="row">
-      <Typography sx={{ fontWeight: 800 }}>{label} : </Typography>
-      <Typography sx={{ color: color }}>{data}</Typography>
-    </Stack>
-  );
-};
-
-const Posts = ({
-  croptype,
-  diseasefound,
-  createdAt,
-  images,
-  updatedAt,
-  id,
-}) => {
-
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        padding: "10px",
-        borderRadius: "10px",
-        boxShadow: "0px 0px 100px 5px rgba(0,0,0,0.2)",
-      }}
-    >
-      
-      <Box>
-        <Postdata label={"Date"} data={""} />
-        <Postdata
-          label={"Disease Detected"}
-          data={diseasefound ? "true" : "false"}
-          color={diseasefound ? "red" : "green"}
-        />
-        <Postdata label={"Crop Type"} data={croptype} />
-      </Box>
-      <span style={{ flexGrow: 1 }} />
-      {images?
-      <Image src={images}  width={100} style={{borderRadius:'10px'}} alt="qwpq" height={100}/>
-      :""
-      }
-    </Box>
-  );
-};
-
-const HeaderBoxBody = ({ title, children }) => {
-  return (
-    <Stack gap={1}>
-      <Box sx={{ padding: "10px", borderRadius: "20px" }}>
-        <Stack>{title}</Stack>
-      </Box>
-      <Box>{children}</Box>
-    </Stack>
-  );
-};
 
 
 function PostsScreen({PostData}) {
@@ -248,24 +191,7 @@ function PostsScreen({PostData}) {
           "POST"
          }
           </Button>
-        <HeaderBoxBody title={"Past Sent Images"}>
-          <Stack gap={1}>
-            {PostData?.reverse().map((a) => {
-              return (
-                <Posts
-                  croptype={a.planttype}
-                  diseasefound={a.diseasefound}
-                  diseasetype={a.diseasetype}
-                  images={a.image}
-                  createdAt={a.createdAt}
-                  updatedAt={a.updatedAt}
-                  id={a._id}
-                  key={a._id}
-                />
-              );
-            })}
-          </Stack>
-        </HeaderBoxBody>
+
       </Stack>
     </Box>
   );

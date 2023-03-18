@@ -8,5 +8,8 @@ module.exports = withPWA({
   // next.js config
   images :{
     domains: ['res.cloudinary.com']
-  }
+  },
+  api: {
+    responseLimit: false,
+  },
 })
