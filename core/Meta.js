@@ -15,12 +15,12 @@ const Meta = () => (
 		<meta name='description' content='Bring your own ingredients' />
 		<meta
 			name='theme-color'
-			content='#f4f4f5'
+			content='#ffffff'
 			media='(prefers-color-scheme: light)'
 		/>
 		<meta
 			name='theme-color'
-			content='#18181b'
+			content='#ffffff'
 			media='(prefers-color-scheme: dark)'
 		/>
 		<meta
