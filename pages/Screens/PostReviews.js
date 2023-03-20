@@ -136,7 +136,11 @@ function PostReviews() {
         <Stack gap={2}>
         <Typography ><span style={{fontWeight:800}}>ID :</span> {CloseUpdata?._id} </Typography>
         <Typography ><span style={{fontWeight:800}}>Disease Type :</span> {CloseUpdata?.diseaseType} </Typography>
+        {
+          (CloseUpdata?.image)?
         <Image alt="" src={CloseUpdata?.image} width={100} height={100} />
+        :""
+        }
         <Typography ><span style={{fontWeight:800,}}>Review by expert :</span> 
         </Typography>
         <Typography sx={{fontSize:"20px",color:"green"}}>Your crop require more fertilizers and remove the defected leaf's from your field.</Typography>
