@@ -13,6 +13,7 @@ import {
   CircularProgress,
   Alert,
   Snackbar,
+  SnackbarContent,
 } from "@mui/material";
 import { Stack } from "@mui/material";
 import Image from "next/image";
@@ -20,16 +21,19 @@ import React, { useState, useEffect } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 
-const SelectCrop = ["Apple", "Rice", "Mango"];
+
+const SelectCrop = ["Potato", "Rice", "Mango"];
+
 
 
 
 
 function PostsScreen({PostData}) {
-  const [Plants, setPlants] = useState("Apple");
+  const [Plants, setPlants] = useState("Potato");
   const [image, setImage] = useState("");
   const [imagePost, setImagePost] = useState(false);
   const imageRef = React.useRef(null);
+  const [Uploaded,setUploaded] = useState(false)
   const [snackbarV,setsnackbarV] = useState(false)
 
   
@@ -53,9 +57,11 @@ function PostsScreen({PostData}) {
   const PostImage = async(image_)=>{
         // console.log(image_)
         setImagePost(true)
-        console.log(image_)
+        // console.log(image_)
         if(image_){
+          
           try{
+
             const res = await fetch( '/api/CropPost',{
             method:'POST',
             headers: {
@@ -66,14 +72,15 @@ function PostsScreen({PostData}) {
               image : image_,
               diseasefound : true,
               planttype : Plants, 
-              diseaseType:"Apple Scrub"
+              diseaseType:"Potato Late Blight"
             })
           })
 
           if(res.status === 200){
             setImagePost(false)
             setsnackbarV(true)
-          } 
+            setUploaded(true)
+          }   
           console.log(res.status === 200)
 
         }catch(err){
@@ -199,8 +206,18 @@ function PostsScreen({PostData}) {
           "POST"
          }
           </Button>
-
+          
       </Stack>
+         {(Uploaded)?
+        <Box onClick={()=>{setUploaded(false)}} sx={{display:'flex',justifyContent:"center",alignItems:"center",minHeight:"20vh"}}>
+          <Alert  color="error">
+            <Typography>DETECTED :</Typography>
+            Potato Late Blight
+          </Alert>
+       </Box>
+       :""
+      }
+      
     </Box>
   );
 }

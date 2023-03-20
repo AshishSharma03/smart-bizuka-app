@@ -69,7 +69,7 @@ const Postdata = ({ label, data, color }) => {
 function PostReviews() {
     const [PostReview, setPostReview] = useState();
     const [Loading, setLoading] = useState(true);
-    const [Index, setIndex] = useState(4);
+    const [Index, setIndex] = useState(10);
     const [open,setOpen] = useState(false)
     const ref = useRef()
 

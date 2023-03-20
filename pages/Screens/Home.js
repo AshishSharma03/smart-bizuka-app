@@ -90,12 +90,12 @@ const marks = [
 function Home() {
 const router = useRouter()
 const [Temp , setTemp] = useState(0)
-  
-useEffect(()=>{
+
+  useEffect(()=>{
 
   NewData()
 
-},[])
+  },[])
 
 
 // setInterval(()=>{
