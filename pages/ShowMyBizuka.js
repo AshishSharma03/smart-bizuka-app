@@ -33,7 +33,7 @@ const router = useRouter()
 
         </Stack>
       </Box>
-      <Image src={BizukaImage} alt="" style={{height:"600px",maxWidth:"500px"}} />
+      <Image src={BizukaImage} alt="  " style={{height:"600px",maxWidth:"500px"}} />
     </Box>
     
   )

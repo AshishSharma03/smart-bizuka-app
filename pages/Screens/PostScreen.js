@@ -11,6 +11,8 @@ import {
   InputLabel,
   IconButton,
   CircularProgress,
+  Alert,
+  Snackbar,
 } from "@mui/material";
 import { Stack } from "@mui/material";
 import Image from "next/image";
@@ -28,7 +30,7 @@ function PostsScreen({PostData}) {
   const [image, setImage] = useState("");
   const [imagePost, setImagePost] = useState(false);
   const imageRef = React.useRef(null);
-  
+  const [snackbarV,setsnackbarV] = useState(false)
 
   
   function useDisplayImage() {
@@ -70,6 +72,7 @@ function PostsScreen({PostData}) {
 
           if(res.status === 200){
             setImagePost(false)
+            setsnackbarV(true)
           } 
           console.log(res.status === 200)
 
@@ -92,6 +95,11 @@ function PostsScreen({PostData}) {
 
   return (
     <Box>
+    
+        <Snackbar onClick={()=>{setsnackbarV(false)}}  open={snackbarV} sx={{minHeight:"50vh"}} anchorOrigin={{ vertical :"top" , horizontal :"center" }}>
+      <Alert>Image Post successfuly</Alert>
+      </Snackbar>
+      
       <Stack direction={"column"} gap={2}>
         <Box>
           <Stack direction={"row"} gap={2}>

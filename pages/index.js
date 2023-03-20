@@ -13,7 +13,10 @@ import PostReviews from './Screens/PostReviews';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
+import { createFirebaseApp } from '../firebase/initFirebase';
 
+
+createFirebaseApp()
 const BtnIcon = [
   {
     id : "Home",

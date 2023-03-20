@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect ,useState} from 'react'
 import { AppBar, Avatar, Box, Button, ButtonGroup, Container, IconButton, Stack, Toolbar, Typography ,Badge, Grid, Divider, Icon,  Slider} from '@mui/material'
 import Battery60Icon from '@mui/icons-material/Battery60';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import WellPlant from '../../public/assets/BizukaBody/WellPlant.png'
+
 const WeatherData = [
     {
         id:"a",
@@ -25,6 +26,9 @@ const WeatherData = [
         unit:"NA"
     }
 ]
+
+
+
 
 
 const WeatherComponent = ({type,data,unit}) =>{
@@ -62,15 +66,15 @@ const HeaderBoxBody =({title,children,noHeader,gap=1,icon,titleColor})=>{
 
 const marks = [
     {
-      value: 0,
+      value: 13,
       label: 'Bad',
     },
     {
-      value: 30,
+      value: 40,
       label: 'Well',
     },
     {
-      value: 67,
+      value: 70,
       label: 'Optimal',
     },
     {
@@ -85,7 +89,33 @@ const marks = [
 
 function Home() {
 const router = useRouter()
+const [Temp , setTemp] = useState(0)
+  
+useEffect(()=>{
 
+  NewData()
+
+},[])
+
+
+// setInterval(()=>{
+//   NewData()
+// },2000)
+
+ const NewData = async ()=>{
+  try{
+    
+    const res = await fetch('/api/GetSoilData',{
+      method :"GET"
+    })
+    const data = await res.json()
+    setTemp(data.a)
+  }catch(err){
+    console.log(err)
+  }
+}
+
+  
   return (
     
     <Stack gap={2} paddingBottom="100px">
@@ -107,7 +137,7 @@ const router = useRouter()
                         {/* // RealTime Data */}
                     <Slider
                     aria-label="Always visible"
-                    defaultValue={40}
+                    value={Temp}
                     disabled
                     style={{color:"#EF9725"}}
                     getAriaValueText={valuetext}

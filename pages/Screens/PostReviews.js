@@ -1,8 +1,9 @@
-import { Box ,Stack,Typography} from '@mui/material'
+import { Box ,IconButton,Stack,Typography} from '@mui/material'
 import Image from 'next/image';
-import React, { useEffect ,useState} from 'react'
+import React, { useEffect ,useRef,useState} from 'react'
 import Loader from './Loader';
-
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { async } from '@firebase/util';
 
 const Postdata = ({ label, data, color }) => {
     return (
@@ -14,6 +15,7 @@ const Postdata = ({ label, data, color }) => {
   };
   
   const Posts = ({
+    onClick,
     croptype,
     diseasefound,
     createdAt,
@@ -24,6 +26,7 @@ const Postdata = ({ label, data, color }) => {
   
     return (
       <Box
+        onClick={onClick}
         sx={{
           display: "flex",
           flexDirection: "row",
@@ -66,20 +69,22 @@ const Postdata = ({ label, data, color }) => {
 function PostReviews() {
     const [PostReview, setPostReview] = useState();
     const [Loading, setLoading] = useState(true);
+    const [Index, setIndex] = useState(4);
+    const [open,setOpen] = useState(false)
+    const ref = useRef()
 
     useEffect(()=>{
-        NeedPost()
-    },[])
-
-    const NeedPost = async () =>{
+        NeedPost(Index)
+    },[Index])
+    console.log(open)
+    const NeedPost = async (_index) =>{
 
         try{
-
-            const res = await fetch('/api/CropPost')
+            const res = await fetch(`/api/CropPost?limit=${_index}`)
             const data = await res.json()
             
             if(res.ok){
-            console.log(data.data)
+            console.log(data)
             setPostReview(data.data.reverse())
             setLoading(false)
             }
@@ -89,17 +94,54 @@ function PostReviews() {
         
     }
 
+    const onscroll = ()=>{
+      const current  = ref.current;
+      if(current){
+        const {scrollTop , clientHeight , scrollHeight}= current
+        const computedScrollHeight = Math.round(scrollTop) + clientHeight
+        if(scrollHeight >= computedScrollHeight - 1 && scrollHeight <= computedScrollHeight + 1 ){
+            console.log('reachBottom')
+            setIndex(Index => Index + 2)
+            if(scrollTop === 0){
+              console.log('Top Scroll is 0')
+            }
+        }
+      }
+    }
+
+    const OpenPost = async (_id)=>{
+      setOpen(true)
+       try{
+          const  res = await fetch(`http://localhost:3000/api/GetSingleCrop?id_=${_id}`)
+          const data = await res.json()
+          console.log(data)
+       }catch(err){
+          console.log(err)
+       }
+
+    }
+
     if(Loading){
         return <Loader height="80vh"/>
     }
 
+  if(open){
+    return <Box sx={{minHeight:"80vh",position:'relative'}} >
+            <IconButton onClick={()=>{setOpen(false)}} sx={{position:"absolute",top:"0px",right:"0px"}}>
+        <CloseRoundedIcon/></IconButton>
+
+        </Box>
+  }
+
   return (
-    <Box>
+    <Box ref={ref} onScroll={onscroll}>
      <HeaderBoxBody>
           <Stack gap={1}>
             {PostReview.map((a) => {
+              console.log(a._id)
               return (
                 <Posts
+                onClick={()=> OpenPost(a._id)}
                   croptype={a.planttype}
                   diseasefound={a.diseasefound}
                   diseasetype={a.diseasetype}
