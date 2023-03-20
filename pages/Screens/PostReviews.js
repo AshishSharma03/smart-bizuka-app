@@ -71,18 +71,19 @@ function PostReviews() {
     const [Loading, setLoading] = useState(true);
     const [Index, setIndex] = useState(10);
     const [open,setOpen] = useState(false)
+    const [CloseUpdata,setCloseUpdata] = useState()
     const ref = useRef()
 
     useEffect(()=>{
         NeedPost(Index)
     },[Index])
-    console.log(open)
+   
     const NeedPost = async (_index) =>{
 
         try{
             const res = await fetch(`/api/CropPost?limit=${_index}`)
             const data = await res.json()
-            
+
             if(res.ok){
             console.log(data)
             setPostReview(data.data.reverse())
@@ -110,11 +111,13 @@ function PostReviews() {
     }
 
     const OpenPost = async (_id)=>{
+      console.log(_id)
       setOpen(true)
        try{
           const  res = await fetch(`http://localhost:3000/api/GetSingleCrop?id_=${_id}`)
           const data = await res.json()
-          console.log(data)
+          
+          setCloseUpdata(data.data)
        }catch(err){
           console.log(err)
        }
@@ -129,7 +132,15 @@ function PostReviews() {
     return <Box sx={{minHeight:"80vh",position:'relative'}} >
             <IconButton onClick={()=>{setOpen(false)}} sx={{position:"absolute",top:"0px",right:"0px"}}>
         <CloseRoundedIcon/></IconButton>
-
+        {console.log(CloseUpdata)}
+        <Stack gap={2}>
+        <Typography ><span style={{fontWeight:800}}>ID :</span> {CloseUpdata?._id} </Typography>
+        <Typography ><span style={{fontWeight:800}}>Disease Type :</span> {CloseUpdata?.diseaseType} </Typography>
+        <Image alt="" src={CloseUpdata?.image} width={100} height={100} />
+        <Typography ><span style={{fontWeight:800,}}>Review by expert :</span> 
+        </Typography>
+        <Typography sx={{fontSize:"20px",color:"green"}}>Your crop require more fertilizers and remove the defected leaf's from your field.</Typography>
+        </Stack>
         </Box>
   }
 
@@ -138,7 +149,7 @@ function PostReviews() {
      <HeaderBoxBody>
           <Stack gap={1}>
             {PostReview.map((a) => {
-              console.log(a._id)
+              
               return (
                 <Posts
                 onClick={()=> OpenPost(a._id)}

@@ -14,6 +14,7 @@ import PostAddIcon from '@mui/icons-material/PostAdd';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import WbSunnyRoundedIcon from '@mui/icons-material/WbSunnyRounded';
 import { createFirebaseApp } from '../firebase/initFirebase';
+import ExpertConnect from './Screens/ExpertConnect';
 
 
 createFirebaseApp()
@@ -121,6 +122,7 @@ function index() {
      {(Screen === 1)? <PostsScreen />: ""}
      {(Screen === 2)? <PostReviews />: ""}
      {(Screen === 3)? <MLCameraScreen/>: ""}
+     {(Screen === 4)? <ExpertConnect/>: ""}
 
       
       <Box sx={{background:"black", display:"flex",justifyContent:"center",alignItems:"center"}}>

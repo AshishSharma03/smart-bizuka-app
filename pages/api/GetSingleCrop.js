@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     switch(method){
       case 'GET' : 
       try{
-        const CropPost = await cropModel.findById(id_).populate("advice").exec()
+        const CropPost = await cropModel.findById(id_)
         
         res.status(200).json({success : true , data : CropPost})
       }catch(error){
