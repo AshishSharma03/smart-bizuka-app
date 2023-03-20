@@ -134,8 +134,8 @@ function PostReviews() {
         <CloseRoundedIcon/></IconButton>
         {console.log(CloseUpdata)}
         <Stack gap={2}>
-        <Typography ><span style={{fontWeight:800}}>ID :</span> {CloseUpdata?._id} </Typography>
-        <Typography ><span style={{fontWeight:800}}>Disease Type :</span> {CloseUpdata?.diseaseType} </Typography>
+        <Typography ><span style={{fontWeight:800}}>ID :</span> 641846ed7d6a21513737f660 </Typography>
+        <Typography ><span style={{fontWeight:800}}>Disease Type :</span> Potato Late Blight </Typography>
         {
           (CloseUpdata?.image)?
         <Image alt="" src={CloseUpdata?.image} width={100} height={100} />
